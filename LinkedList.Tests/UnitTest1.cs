@@ -11,7 +11,7 @@ namespace Linked_List.Tests
         [TestCase(1, 2, 3)]
         [TestCase(1, 3, 4)]
         [TestCase(1, 4, 5)]
-        public void GetByIndex(int case_of_list, int index, int expected)
+        public void GetByIndexTest(int case_of_list, int index, int expected)
         {
             LinkedList list = LinkedListMock(case_of_list);
             int actual = list[index];
@@ -20,7 +20,7 @@ namespace Linked_List.Tests
 
         [TestCase(1, -1)]
         [TestCase(1, 1000)]
-        public void GetByIndexNegative(int case_of_list, int index)
+        public void GetByIndexNegativeTest(int case_of_list, int index)
         {
             LinkedList list = LinkedListMock(case_of_list);
             int a;
@@ -33,7 +33,7 @@ namespace Linked_List.Tests
         [TestCase(3, 0, 10, 3)]
         [TestCase(4, 1, 10, 4)]
         [TestCase(5, 6, 10, 5)]
-        public void SetToIndex(int case_of_list, int index, int value, int case_of_exp_list)
+        public void SetToIndexTest(int case_of_list, int index, int value, int case_of_exp_list)
         {
             LinkedList expected = SetToIndexExpectedMock(case_of_exp_list);
             LinkedList actual = LinkedListMock(case_of_list);
@@ -44,7 +44,7 @@ namespace Linked_List.Tests
 
         [TestCase(1, -1)]
         [TestCase(1, 1000)]
-        public void SetToIndexNegative(int case_of_list, int index)
+        public void SetToIndexNegativeTest(int case_of_list, int index)
         {
             LinkedList list = LinkedListMock(case_of_list);
             Assert.Throws<IndexOutOfRangeException>(() => list[index] = 1);
@@ -56,7 +56,7 @@ namespace Linked_List.Tests
         [TestCase(3, int.MaxValue, 3)]
         [TestCase(4, int.MinValue, 4)]
         [TestCase(5, -10, 5)]
-        public void Add(int case_of_list, int value, int case_of_exp_list)
+        public void AddTest(int case_of_list, int value, int case_of_exp_list)
         {
             LinkedList expected = AddExpectedMock(case_of_exp_list);
             LinkedList actual = LinkedListMock(case_of_list);
@@ -70,13 +70,168 @@ namespace Linked_List.Tests
         [TestCase(2, new int[] { }, 2)]
         [TestCase(3, new int[] { 10, 20}, 3)]
         [TestCase(4, new int[] { int.MaxValue, int.MinValue }, 4)]
-        public void Add(int case_of_list, int[] array, int case_of_exp_list)
+        public void AddTest(int case_of_list, int[] array, int case_of_exp_list)
         {
             LinkedList expected = AddArrayMock(case_of_exp_list);
             LinkedList actual = LinkedListMock(case_of_list);
 
             actual.Add(array);
             Assert.AreEqual(expected, actual);
+        }
+
+        [TestCase(1, 10, 1)]
+        [TestCase(2, int.MaxValue, 2)]
+        [TestCase(4, int.MinValue, 4)]
+        public void AddToOriginTest(int case_of_list, int n, int case_of_exp_list)
+        {
+            LinkedList expected = AddToOriginExpectedMock(case_of_exp_list);
+            LinkedList actual = LinkedListMock(case_of_list);
+
+            actual.AddToOrigin(n);
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestCase(1, new int[] { 10, 20, 30}, 1)]
+        [TestCase(2, new int[] { 30, 20, 10}, 2)]
+        [TestCase(3, new int[] { }, 3)]
+        [TestCase(4, new int[] { 10 }, 4)]
+        [TestCase(5, new int[] { int.MaxValue, int.MinValue }, 5)]
+        public void AddArrayToOriginTest(int case_of_list, int[] arr, int case_of_exp_list)
+        {
+            LinkedList expected = AddArrayToOriginExpectedMock(case_of_exp_list);
+            LinkedList actual = LinkedListMock(case_of_list);
+
+            actual.AddToOrigin(arr);
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestCase(1, 2, 10, 1)]
+        [TestCase(2, 0, 10, 2)]
+        [TestCase(5, 6, 100, 5)]
+        public void AddToIndexTest(int case_of_list, int index, int n, int case_of_exp_list)
+        {
+            LinkedList expected = AddToIndexExpectedMock(case_of_exp_list);
+            LinkedList actual = LinkedListMock(case_of_list);
+
+            actual.AddToIndex(index, n);
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestCase(1, 2, new int[] { 10, 20, 30 }, 1)]
+        [TestCase(1, 5, new int[] { 10, 20, 30 }, 6)]
+        [TestCase(1, 4, new int[] { 10, 20, 30 }, 7)]
+        [TestCase(1, 0, new int[] { }, 8)]
+        [TestCase(2, 0, new int[] { 10, 20, 30 }, 2)]
+        [TestCase(3, 0, new int[] { }, 3)]
+        [TestCase(4, 1, new int[] { 10, 20, 30 }, 4)]
+        [TestCase(5, 2, new int[] { int.MaxValue, int.MinValue, 0 }, 5)]
+        public void AddArrayToIndexTest(int case_of_list, int index, int[] arr, int case_of_exp_list)
+        {
+            LinkedList expected = AddArrayToIndexExpectedMock(case_of_exp_list);
+            LinkedList actual = LinkedListMock(case_of_list);
+
+            actual.AddToIndex(index, arr);
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestCase(1, 1)]
+        [TestCase(2, 2)]
+        [TestCase(4, 4)]
+        [TestCase(3, 3)]
+        [TestCase(5, 5)]
+        public void DeleteTest(int case_of_list, int case_of_expected_list)
+        {
+            LinkedList expected = DeleteExpectedMock(case_of_expected_list);
+            LinkedList actual =  LinkedListMock(case_of_list);
+
+            actual.Delete();
+            Assert.AreEqual(expected, actual);
+        }
+
+
+        [TestCase(1, 3, 1)]
+        [TestCase(2, 0, 2)]
+        [TestCase(3, 0, 3)]
+        [TestCase(4, 1, 4)]
+        [TestCase(5, 6, 5)]
+        public void DeleteTest(int case_of_list, int num, int case_of_expected_list)
+        {
+            LinkedList expected = DeleteNElementsExpectedMock(case_of_expected_list);
+            LinkedList actual = LinkedListMock(case_of_list);
+
+            actual.Delete(num);
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestCase(1, 1)]
+        [TestCase(2, 2)]
+        [TestCase(3, 3)]
+        [TestCase(4, 4)]
+        [TestCase(5, 5)]
+        public void DeleteFromOriginTest(int case_of_list, int case_of_expected_list)
+        {
+            LinkedList expected = DeleteFromOriginMock(case_of_expected_list);
+            LinkedList actual = LinkedListMock(case_of_list);
+
+            actual.DeleteFromOrigin();
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestCase(1, 2, 1)]
+        [TestCase(2, 10, 2)]
+        [TestCase(3, 0, 3)]
+        [TestCase(4, 1, 4)]
+        [TestCase(5, 3, 5)]
+        public void DeleteFromOriginTest(int case_of_list, int num, int case_of_expected_list)
+        {
+            LinkedList expected = DeleteFromOriginNElementsMock(case_of_expected_list);
+            LinkedList actual = LinkedListMock(case_of_list);
+
+            actual.DeleteFromOrigin(num);
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestCase(1, 2, 1)]
+        [TestCase(2, 0, 2)]
+        [TestCase(2, 4, 6)]
+        [TestCase(4, 0, 4)]
+        [TestCase(5, 4, 8)]
+        [TestCase(5, 0, 5)]
+        [TestCase(5, 5, 7)]
+        public void DeleteFromIndexTest(int case_of_list, int index, int case_of_expected_list)
+        {
+            LinkedList expected = DeleteFromIndexMock(case_of_expected_list);
+            LinkedList actual = LinkedListMock(case_of_list);
+
+            actual.DeleteFromIndex(index);
+            Assert.AreEqual(expected, actual);
+        }
+
+        
+        [TestCase(1, 1, 2, 1)]
+        [TestCase(2, 0, 2, 2)]
+        [TestCase(3, 0, 0, 3)]
+        [TestCase(4, 0, 1, 4)]
+        [TestCase(5, 5, 1, 5)]
+        [TestCase(5, 5, 20, 5)]
+        public void DeleteNElementsFromIndexTest(int case_of_list, int index, int num, int case_of_expected_list)
+        {
+            LinkedList expected = DeleteNElementsFromIndexMock(case_of_expected_list);
+            LinkedList actual = LinkedListMock(case_of_list);
+
+            actual.DeleteFromIndex(index, num);
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestCase(1, 10)]
+        [TestCase(1, -10)]
+        [TestCase(3, 0)]
+        public void DeleteFromIndexNegativeTest(int case_of_list, int index)
+        {
+            LinkedList list = LinkedListMock(case_of_list);
+
+            Assert.Throws<NullReferenceException>(() => list.DeleteFromIndex(index));
+            Assert.Throws<NullReferenceException>(() => list.DeleteFromIndex(index, 20));
         }
 
         public LinkedList LinkedListMock(int a)
@@ -97,7 +252,267 @@ namespace Linked_List.Tests
                     list = new LinkedList(new int[] { 1 });
                     return list;
                 case 5:
-                    list = new LinkedList(new int[] { 10, 5, 10, 20, 40, 30});
+                    list = new LinkedList(new int[] { 10, 5, 10, 20, 40, 30 });
+                    return list;
+                default:
+                    throw new ArgumentException();
+            }
+        }
+
+        public LinkedList DeleteNElementsFromIndexMock(int a)
+        {
+            LinkedList list;
+            switch (a)
+            {
+                case 1:
+                    list = new LinkedList(new int[] { 1, 4, 5 });
+                    return list;
+                case 2:
+                    list = new LinkedList(new int[] { 3, 2, 1 });
+                    return list;
+                case 3:
+                    list = new LinkedList(new int[] { });
+                    return list;
+                case 4:
+                    list = new LinkedList(new int[] { });
+                    return list;
+                case 5:
+                    list = new LinkedList(new int[] { 10, 5, 10, 20, 40 });
+                    return list;
+                default:
+                    throw new ArgumentException();
+            }
+        }
+
+        public LinkedList DeleteFromIndexMock(int a)
+        {
+            LinkedList list;
+            switch (a)
+            {
+                case 1:
+                    list = new LinkedList(new int[] { 1, 2, 4, 5 });
+                    return list;
+                case 2:
+                    list = new LinkedList(new int[] { 4, 3, 2, 1 });
+                    return list;
+                case 4:
+                    list = new LinkedList(new int[] { });
+                    return list;
+                case 5:
+                    list = new LinkedList(new int[] { 5, 10, 20, 40, 30 });
+                    return list;
+                case 6:
+                    list = new LinkedList(new int[] { 5, 4, 3, 2 });
+                    return list;
+                case 7:
+                    list = new LinkedList(new int[] { 10, 5, 10, 20, 40 });
+                    return list;
+                case 8:
+                    list = new LinkedList(new int[] { 10, 5, 10, 20, 30 });
+                    return list;
+                default:
+                    throw new ArgumentException();
+            }
+        }
+
+        public LinkedList DeleteFromOriginNElementsMock(int a)
+        {
+            LinkedList list;
+            switch (a)
+            {
+                case 1:
+                    list = new LinkedList(new int[] { 3, 4, 5 });
+                    return list;
+                case 2:
+                    list = new LinkedList(new int[] { });
+                    return list;
+                case 3:
+                    list = new LinkedList(new int[] { });
+                    return list;
+                case 4:
+                    list = new LinkedList(new int[] { });
+                    return list;
+                case 5:
+                    list = new LinkedList(new int[] { 20, 40, 30 });
+                    return list;
+                default:
+                    throw new ArgumentException();
+            }
+        }
+        public LinkedList DeleteFromOriginMock(int a)
+        {
+            LinkedList list;
+            switch (a)
+            {
+                case 1:
+                    list = new LinkedList(new int[] { 2, 3, 4, 5 });
+                    return list;
+                case 2:
+                    list = new LinkedList(new int[] { 4, 3, 2, 1 });
+                    return list;
+                case 3:
+                    list = new LinkedList(new int[] { });
+                    return list;
+                case 4:
+                    list = new LinkedList(new int[] { });
+                    return list;
+                case 5:
+                    list = new LinkedList(new int[] { 5, 10, 20, 40, 30 });
+                    return list;
+                default:
+                    throw new ArgumentException();
+            }
+        }
+        public LinkedList DeleteNElementsExpectedMock(int a)
+        {
+            LinkedList list;
+            switch (a)
+            {
+                case 1:
+                    list = new LinkedList(new int[] { 1, 2 });
+                    return list;
+                case 2:
+                    list = new LinkedList(new int[] { 5, 4, 3, 2, 1 });
+                    return list;
+                case 3:
+                    list = new LinkedList(new int[] { });
+                    return list;
+                case 4:
+                    list = new LinkedList(new int[] { });
+                    return list;
+                case 5:
+                    list = new LinkedList(new int[] { });
+                    return list;
+                default:
+                    throw new ArgumentException();
+            }
+        }
+        public LinkedList DeleteExpectedMock(int a)
+        {
+            LinkedList list;
+            switch (a)
+            {
+                case 1:
+                    list = new LinkedList(new int[] { 1, 2, 3, 4 });
+                    return list;
+                case 2:
+                    list = new LinkedList(new int[] { 5, 4, 3, 2 });
+                    return list;
+                case 3:
+                    list = new LinkedList(new int[] { });
+                    return list;
+                case 4:
+                    list = new LinkedList(new int[] { });
+                    return list;
+                case 5:
+                    list = new LinkedList(new int[] { 10, 5, 10, 20, 40 });
+                    return list;
+                default:
+                    throw new ArgumentException();
+            }
+        }
+
+        public LinkedList AddArrayToIndexExpectedMock(int a)
+        {
+            LinkedList list;
+            switch (a)
+            {
+                case 1:
+                    list = new LinkedList(new int[] { 1, 2, 10, 20, 30, 3, 4, 5 });
+                    return list;
+                case 2:
+                    list = new LinkedList(new int[] { 10, 20, 30, 5, 4, 3, 2, 1 });
+                    return list;
+                case 3:
+                    list = new LinkedList(new int[] { });
+                    return list;
+                case 4:
+                    list = new LinkedList(new int[] { 1, 10, 20, 30 });
+                    return list;
+                case 5:
+                    list = new LinkedList(new int[] { 10, 5, int.MaxValue, int.MinValue, 0, 10, 20, 40, 30 });
+                    return list;
+                case 6:
+                    list = new LinkedList(new int[] { 1, 2, 3, 4, 5, 10, 20, 30 });
+                    return list;
+                case 7:
+                    list = new LinkedList(new int[] { 1, 2, 3, 4, 10, 20, 30, 5});
+                    return list;
+                case 8:
+                    list = new LinkedList(new int[] { 1, 2, 3, 4, 5 });
+                    return list;
+                default:
+                    throw new ArgumentException();
+            }
+        }
+        public LinkedList AddToIndexExpectedMock(int a)
+        {
+            LinkedList list;
+            switch (a)
+            {
+                case 1:
+                    list = new LinkedList(new int[] { 1, 2, 10, 3, 4, 5 });
+                    return list;
+                case 2:
+                    list = new LinkedList(new int[] { 10, 5, 4, 3, 2, 1 });
+                    return list;
+                case 3:
+                    list = new LinkedList(new int[] { });
+                    return list;
+                case 4:
+                    list = new LinkedList(new int[] { 1 });
+                    return list;
+                case 5:
+                    list = new LinkedList(new int[] { 10, 5, 10, 20, 40, 30, 100 });
+                    return list;
+                default:
+                    throw new ArgumentException();
+            }
+        }
+        public LinkedList AddArrayToOriginExpectedMock(int a)
+        {
+            LinkedList list;
+            switch (a)
+            {
+                case 1:
+                    list = new LinkedList(new int[] { 10, 20, 30, 1, 2, 3, 4, 5 });
+                    return list;
+                case 2:
+                    list = new LinkedList(new int[] { 30, 20, 10, 5, 4, 3, 2, 1 });
+                    return list;
+                case 3:
+                    list = new LinkedList(new int[] { });
+                    return list;
+                case 4:
+                    list = new LinkedList(new int[] { 10, 1 });
+                    return list;
+                case 5:
+                    list = new LinkedList(new int[] { int.MaxValue, int.MinValue, 10, 5, 10, 20, 40, 30 });
+                    return list;
+                default:
+                    throw new ArgumentException();
+            }
+        }
+
+        public LinkedList AddToOriginExpectedMock(int a)
+        {
+            LinkedList list;
+            switch (a)
+            {
+                case 1:
+                    list = new LinkedList(new int[] { 10, 1, 2, 3, 4, 5 });
+                    return list;
+                case 2:
+                    list = new LinkedList(new int[] { int.MaxValue, 5, 4, 3, 2, 1 });
+                    return list;
+                case 3:
+                    list = new LinkedList(new int[] { });
+                    return list;
+                case 4:
+                    list = new LinkedList(new int[] { int.MinValue, 1 });
+                    return list;
+                case 5:
+                    list = new LinkedList(new int[] { 10, 5, 10, 20, 40, 30 });
                     return list;
                 default:
                     throw new ArgumentException();
