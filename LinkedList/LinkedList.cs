@@ -43,11 +43,7 @@ namespace DataStructures
             {
                 if (index < 0 || index >= Length)
                     throw new IndexOutOfRangeException();
-                Node tmp = _root;
-                for (int i = 0; i < index; i++)
-                {
-                    tmp = tmp.Next;
-                }
+                Node tmp = GetNode(index);
                 return tmp.Value;
             }
             set
@@ -56,11 +52,7 @@ namespace DataStructures
                     throw new IndexOutOfRangeException();
                 if (index == Length)
                     Add(value);
-                Node tmp = _root;
-                for (int i = 0; i < index; i++)
-                {
-                    tmp = tmp.Next;
-                }
+                Node tmp = GetNode(index);
                 tmp.Value = value;
             }
         }
@@ -76,9 +68,7 @@ namespace DataStructures
             }
             else
             {
-                Node tmp = _root;
-                for (int i = 0; i < Length - 1; i++)
-                    tmp = tmp.Next;
+                Node tmp = GetNode(Length - 1);
                 Node newNode = new Node(n);
                 tmp.Next = newNode;
                 Length++;
@@ -90,11 +80,7 @@ namespace DataStructures
             if (Length == 0 && array.Length != 0)
                 _root = new Node(array[0]);
 
-            Node tmp = _root;
-            for (int i = 0; i < Length - 1; i++)
-            {
-                tmp = tmp.Next;
-            }
+            Node tmp = GetNode(Length - 1);
             for (int i = 0; i < array.Length; i++)
             {
                 tmp.Next = new Node(array[i]);
@@ -139,11 +125,7 @@ namespace DataStructures
             else if (index < Length)
             {
                 Node newNode = new Node(n);
-                Node crnt = _root;
-                for (int i = 0; i < index - 1; i++)
-                {
-                    crnt = crnt.Next;
-                }
+                Node crnt = GetNode(index - 1);
                 newNode.Next = crnt.Next;
                 crnt.Next = newNode;
                 Length++;
@@ -189,7 +171,7 @@ namespace DataStructures
         {
             if (Length != 0 && num < Length)
             {
-                _root = GetNode(num + 1);
+                _root = GetNode(num);
                 Length -= num;
             }
             else
@@ -207,11 +189,11 @@ namespace DataStructures
             if (Length != 0 && num < Length)
             {
                 if (index == 0)
-                    _root = GetNode(num + 1);
+                    _root = GetNode(num );
                 else
                 {
-                    Node crnt = GetNode(index);
-                    crnt.Next = GetNode(index + num + 1);
+                    Node crnt = GetNode(index - 1);
+                    crnt.Next = GetNode(index + num);
                 }
                 Length -= num;
             }
@@ -241,8 +223,6 @@ namespace DataStructures
                     reversed_list.Add(this[Length - i - 1]);
                 }
                 _root = reversed_list.GetFirstNode();
-
-               
             }
         }
 
@@ -406,10 +386,16 @@ namespace DataStructures
             DeleteFromIndex(index_of_element);
         }
 
+        /// <summary>
+        /// Возвращает значение типа Node, указывающее на элемент
+        /// списка под указанным индексом
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
         private Node GetNode(int index)
         {
             Node crnt = _root;
-            for (int i = 0; i < index - 1; i++)
+            for (int i = 0; i < index; i++)
             {
                 crnt = crnt.Next;
             }
