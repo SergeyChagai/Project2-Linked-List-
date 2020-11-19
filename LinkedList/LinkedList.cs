@@ -219,7 +219,130 @@ namespace DataStructures
                 Clean();
         }
 
-       
+        public int IndexOfElement(int element)
+        {
+            Node crnt = _root;
+            for (int i = 0; i < Length; i++)
+            {
+                if (crnt.Value == element)
+                    return i;
+                crnt = crnt.Next;
+            }
+            throw new Exception("List does not contain the element with this value");
+        }
+
+        public void Reverse()
+        {
+            if (Length > 1)
+            {
+                LinkedList reversed_list = new LinkedList(this[Length - 1]);
+                for (int i = 1; i < Length ; i++)
+                {
+                    reversed_list.Add(this[Length - i - 1]);
+                }
+                _root = reversed_list.GetFirstNode();
+            }
+        }
+
+        public int FindMax()
+        {
+            if (Length == 0)
+                throw new Exception("List is epmpty");
+            int max = _root.Value;
+            Node crnt = _root.Next;
+            for (int i = 1; i < Length; i++)
+            {
+                if (crnt.Value > max)
+                    max = crnt.Value;
+                crnt = crnt.Next;
+            }
+            return max;
+        }
+
+        public int FindMin()
+        {
+            if (Length == 0)
+                throw new Exception("List is epmpty");
+            int min = _root.Value;
+            Node crnt = _root.Next;
+            for (int i = 1; i < Length; i++)
+            {
+                if (crnt.Value < min)
+                    min = crnt.Value;
+                crnt = crnt.Next;
+            }
+            return min;
+        }
+
+        public int IndexOfMin()
+        {
+            if (Length == 0)
+                throw new Exception("List is empty");
+            int index = IndexOfElement(FindMin());
+
+            return index;
+        }
+
+        public int IndexOfMax()
+        {
+            if (Length == 0)
+                throw new Exception("List is empty");
+            int index = IndexOfElement(FindMax());
+
+            return index;
+        }
+
+        public void SortIncrease()
+        {
+            int i_min;
+            for (int i = 0; i < Length; i++)
+            {
+                i_min = i;
+                for (int j = i + 1; j < Length; j++)
+                {
+                    if (this[j] < this[i_min])
+                    {
+                        i_min = j;
+                    }
+                }
+                Swap(i, i_min);
+            }
+        }
+
+        public void SortDecrease()
+        {
+            for (int i = 1; i < Length; i++)
+            {
+                int crnt = this[i];
+                int j = i;
+                while (j != 0 && crnt > this[j - 1])
+                {
+                    Swap(j - 1, j);
+                    j--;
+                }
+                this[j] = crnt;
+            }
+        }
+
+        public void DeleteElementWithValue(int value)
+        {
+            DeleteFromIndex(IndexOfElement(value));
+        }
+
+        public void DeleteAllElementsWithValue(int value)
+        {
+            bool flag = false;
+            for (int i = 0; i < Length; i++)
+            {
+                if (this[i] == value)
+                {
+                    DeleteFromIndex(i);
+                    flag = true;
+                }
+            }
+            if (flag == false)
+                throw new Exception("List does not contain this element");
+        }
 
         public override bool Equals(object obj)
         {
@@ -248,6 +371,20 @@ namespace DataStructures
         public override int GetHashCode()
         {
             return base.GetHashCode();
+        }
+
+        public void Swap(int index_of_first, int index_of_second)
+        {
+            AddToIndex(index_of_second, this[index_of_first]);
+            AddToIndex(index_of_first, this[index_of_second + 1]);
+            DeleteFromIndex(index_of_first + 1);
+            DeleteFromIndex(index_of_second + 1);
+        }
+
+        public void MovingElement(int index_of_element, int index_of_destination)
+        {
+            AddToIndex(index_of_destination, this[index_of_element]);
+            DeleteFromIndex(index_of_element);
         }
 
         private Node GetNode(int index)
