@@ -235,12 +235,23 @@ namespace DataStructures
         {
             if (Length > 1)
             {
-                LinkedList reversed_list = new LinkedList(this[Length - 1]);
-                for (int i = 1; i < Length ; i++)
+                //LinkedList reversed_list = new LinkedList(this[Length - 1]);
+                //for (int i = 1; i < Length ; i++)
+                //{
+                //    reversed_list.Add(this[Length - i - 1]);
+                //}
+                //_root = reversed_list.GetFirstNode();
+
+                Node oldRoot = _root;
+                Node tmp;
+
+                while(oldRoot.Next != null)
                 {
-                    reversed_list.Add(this[Length - i - 1]);
+                    tmp = oldRoot.Next;
+                    oldRoot.Next = tmp.Next;
+                    tmp.Next = _root;
+                    _root = tmp;
                 }
-                _root = reversed_list.GetFirstNode();
             }
         }
 
