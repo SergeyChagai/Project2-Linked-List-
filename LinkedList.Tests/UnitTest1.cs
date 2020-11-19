@@ -269,6 +269,20 @@ namespace Linked_List.Tests
             Assert.AreEqual(expected, actual);
         }
 
+        [TestCase(1, 1)]
+        [TestCase(2, 2)]
+        [TestCase(3, 3)]
+        [TestCase(4, 4)]
+        [TestCase(5, 5)]
+        public void ReverseOptimalTest(int case_of_list, int case_of_expected_list)
+        {
+            LinkedList expected = ReverseExpectedMock(case_of_expected_list);
+            LinkedList actual = LinkedListMock(case_of_list);
+
+            actual.ReverseOptimal();
+            Assert.AreEqual(expected, actual);
+        }
+
         [TestCase(1, 5)]
         [TestCase(2, 5)]
         [TestCase(4, 1)]

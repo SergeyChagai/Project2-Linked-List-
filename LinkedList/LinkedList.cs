@@ -235,17 +235,25 @@ namespace DataStructures
         {
             if (Length > 1)
             {
-                //LinkedList reversed_list = new LinkedList(this[Length - 1]);
-                //for (int i = 1; i < Length ; i++)
-                //{
-                //    reversed_list.Add(this[Length - i - 1]);
-                //}
-                //_root = reversed_list.GetFirstNode();
+                LinkedList reversed_list = new LinkedList(this[Length - 1]);
+                for (int i = 1; i < Length; i++)
+                {
+                    reversed_list.Add(this[Length - i - 1]);
+                }
+                _root = reversed_list.GetFirstNode();
 
+               
+            }
+        }
+
+        public void ReverseOptimal()
+        {
+            if (Length > 1)
+            {
                 Node oldRoot = _root;
                 Node tmp;
 
-                while(oldRoot.Next != null)
+                while (oldRoot.Next != null)
                 {
                     tmp = oldRoot.Next;
                     oldRoot.Next = tmp.Next;
